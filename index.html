@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Interactive Love Letter</title>
+  <title>Dear Jazz</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +15,7 @@
       --blush: #FADADD;
       --ivory: #FFF8F3;
       --rose: #E8B4B8;
-      --rose-dark: #B77782;
       --ink: #5B3D3E;
-      --soft-brown: #9A7B67;
-      --paper-shadow: rgba(100, 70, 55, 0.18);
     }
 
     * {
@@ -35,6 +32,132 @@
       font-family: "Cormorant Garamond", serif;
     }
 
+    /* ================= LOADER ================= */
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: grid;
+      place-items: center;
+      background: #000;
+      transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1), visibility 900ms ease;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .cigarette-loader {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      display: grid;
+      place-items: center;
+    }
+
+    .cigarette {
+      position: relative;
+      width: 190px;
+      height: 16px;
+      transform: rotate(-14deg);
+      filter: drop-shadow(0 12px 20px rgba(255,255,255,0.08));
+      animation: cigaretteFloat 2s ease-in-out infinite;
+    }
+
+    .paper {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 145px;
+      height: 16px;
+      border-radius: 999px 0 0 999px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(214,214,214,0.9)),
+        repeating-linear-gradient(90deg, rgba(0,0,0,0.05) 0 1px, transparent 1px 8px);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.8), inset 0 -2px 4px rgba(0,0,0,0.18);
+    }
+
+    .filter {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 48px;
+      height: 16px;
+      border-radius: 0 999px 999px 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(110,70,35,0.28) 0 3px, transparent 3px 7px),
+        linear-gradient(180deg, #d4a066, #9d6334);
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.22);
+    }
+
+    .ash {
+      position: absolute;
+      left: -14px;
+      top: -2px;
+      width: 18px;
+      height: 20px;
+      border-radius: 4px;
+      background:
+        radial-gradient(circle at 30% 25%, #d0d0d0, #7d7d7d 55%, #3b3b3b 100%);
+      box-shadow: inset 0 2px 3px rgba(255,255,255,0.28), inset 0 -4px 5px rgba(0,0,0,0.34);
+      animation: ashBurn 2s ease-in-out infinite;
+    }
+
+    .ember {
+      position: absolute;
+      left: -5px;
+      top: 4px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #fff1a8 0%, #ff8a00 38%, #c22816 65%, #4b0805 100%);
+      box-shadow: 0 0 12px rgba(255,105,0,0.95), 0 0 26px rgba(255,58,0,0.55);
+      animation: emberPulse 720ms ease-in-out infinite alternate;
+      z-index: 3;
+    }
+
+    .smoke {
+      position: absolute;
+      left: -16px;
+      top: -58px;
+      width: 20px;
+      height: 64px;
+      border-left: 2px solid rgba(255,255,255,0.72);
+      border-radius: 50%;
+      filter: blur(0.4px);
+      opacity: 0;
+      animation: smokeRise 2.2s ease-in-out infinite;
+    }
+
+    .smoke-1 { animation-delay: 0s; transform: rotate(-8deg); }
+    .smoke-2 { animation-delay: 0.45s; left: -6px; transform: rotate(10deg); height: 72px; }
+    .smoke-3 { animation-delay: 0.9s; left: -24px; transform: rotate(-18deg); height: 58px; }
+
+    @keyframes cigaretteFloat {
+      0%, 100% { transform: rotate(-14deg) translateY(0); }
+      50% { transform: rotate(-14deg) translateY(-4px); }
+    }
+
+    @keyframes emberPulse {
+      from { transform: scale(0.85); opacity: 0.72; }
+      to { transform: scale(1.18); opacity: 1; }
+    }
+
+    @keyframes ashBurn {
+      0%, 100% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(-4px); opacity: 0.82; }
+    }
+
+    @keyframes smokeRise {
+      0% { opacity: 0; transform: translateY(18px) scale(0.65) rotate(-8deg); }
+      22% { opacity: 0.68; }
+      60% { opacity: 0.5; transform: translateY(-10px) scale(1) rotate(8deg); }
+      100% { opacity: 0; transform: translateY(-46px) scale(1.25) rotate(-16deg); }
+    }
+
+    /* ================= PAGE TEXTURE ================= */
     body::before {
       content: "";
       position: fixed;
@@ -55,7 +178,7 @@
       inset: 0;
       pointer-events: none;
       z-index: 21;
-      opacity: 0.13;
+      opacity: 0.12;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 260 260' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
@@ -97,6 +220,7 @@
       z-index: 3;
     }
 
+    /* ================= BACKGROUND ELEMENTS ================= */
     .ambient {
       position: absolute;
       inset: 0;
@@ -106,11 +230,12 @@
 
     .heart {
       position: absolute;
-      color: rgba(232, 180, 184, 0.58);
-      font-size: clamp(14px, 1.8vw, 24px);
-      animation: floatHeart var(--speed) cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform, opacity;
-      opacity: 0.65;
-      filter: blur(0.1px);
+      color: rgba(232, 160, 170, 0.72);
+      font-size: clamp(16px, 2vw, 24px);
+      opacity: 0.72;
+      animation: floatHeart var(--speed) cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      z-index: 1;
+      pointer-events: none;
     }
 
     @keyframes floatHeart {
@@ -119,92 +244,67 @@
       100% { transform: translate3d(0, 0, 0) rotate(-6deg) scale(1); }
     }
 
-    .petal {
-      position: absolute;
-      width: 14px;
-      height: 24px;
-      border-radius: 80% 0 80% 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(250,218,221,0.8));
-      opacity: 0.55;
-      animation: fallPetal var(--fall) cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform, opacity;
-    }
-
-    @keyframes fallPetal {
-      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.45; }
-      50% { transform: translate3d(28px, 48vh, 0) rotate(130deg); opacity: 0.5; }
-      100% { transform: translate3d(54px, 110vh, 0) rotate(260deg); opacity: 0; }
-    }
-
     .lily-cluster {
       position: absolute;
-      width: clamp(170px, 22vw, 330px);
-      opacity: 0.92;
-      filter: drop-shadow(0 18px 24px rgba(95, 65, 55, 0.13));
-      animation: breathe 8.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform;
+      width: clamp(170px, 22vw, 310px);
+      opacity: 0.26;
+      filter: blur(0.2px) drop-shadow(0 10px 20px rgba(95, 65, 55, 0.08));
+      animation: breathe 9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+      z-index: 0;
+      pointer-events: none;
     }
 
-    .lily-cluster.left-top { left: -22px; top: -18px; transform: rotate(-15deg); }
-    .lily-cluster.right-bottom { right: -24px; bottom: -16px; transform: rotate(165deg); animation-delay: -2s; }
-    .lily-cluster.left-bottom { left: 4vw; bottom: 5vh; transform: rotate(-34deg) scale(0.72); opacity: 0.42; }
-    .lily-cluster.right-top { right: 5vw; top: 8vh; transform: rotate(145deg) scale(0.64); opacity: 0.36; }
+    .lily-cluster.left-top { left: -28px; top: -22px; transform: rotate(-15deg); }
+    .lily-cluster.right-bottom { right: -34px; bottom: -28px; transform: rotate(165deg); animation-delay: -2s; }
+    .lily-cluster.left-bottom { left: 4vw; bottom: 5vh; transform: rotate(-34deg) scale(0.76); opacity: 0.32; }
+    .lily-cluster.right-top { right: 5vw; top: 8vh; transform: rotate(145deg) scale(0.72); opacity: 0.3; }
 
     @keyframes breathe {
-      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(0, -7px, 0) scale(1.018); }
+      0%, 100% { translate: 0 0; scale: 1; }
+      50% { translate: 0 -7px; scale: 1.018; }
     }
 
+    .lily-svg .stem { stroke: #9BA979; stroke-width: 2.2; fill: none; opacity: 0.65; }
+    .lily-svg .leaf { fill: #B9B987; opacity: 0.58; }
+    .lily-svg .petal-main { fill: #FFF8F3; stroke: rgba(183,119,130,0.25); stroke-width: 1; }
+    .lily-svg .petal-blush { fill: #FADADD; opacity: 0.74; }
+    .lily-svg .stamen { stroke: #D8A65F; stroke-width: 1.4; stroke-linecap: round; }
+
+    /* ================= ENVELOPE ================= */
     .centerpiece {
       position: relative;
       width: min(86vw, 720px);
       height: min(72vh, 580px);
       display: grid;
       place-items: center;
+      z-index: 5;
     }
-
-    .caption { display:none; }
-
-    .pigeon {
-      position: absolute;
-      top: 15%;
-      left: 16%;
-      width: 138px;
-      height: 86px;
-      animation: pigeonFloat 7.2s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform;
-      filter: drop-shadow(0 14px 20px rgba(90,60,50,0.12));
-      z-index: 3;
-    }
-
-    @keyframes pigeonFloat {
-      0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
-      50% { transform: translate3d(8px, -14px, 0) rotate(2deg); }
-    }
-
-    .pigeon svg { width: 100%; height: 100%; }
 
     .envelope-wrap {
       position: relative;
       width: min(76vw, 480px);
       height: 310px;
       cursor: pointer;
-      perspective: 1100px;
-      transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 700ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
-      z-index: 5;
+      perspective: 1200px;
+      transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 700ms cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 10;
+      will-change: transform;
     }
 
     .envelope-wrap:hover {
-      transform: translateY(-7px) scale(1.018);
-      filter: drop-shadow(0 30px 42px rgba(95, 66, 52, 0.18));
+      transform: translateY(-6px) scale(1.012);
+      filter: drop-shadow(0 30px 42px rgba(95, 66, 52, 0.16));
     }
 
     .envelope {
       position: absolute;
       inset: 32px 0 0;
+      z-index: 1;
       border-radius: 8px;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.44), transparent 40%),
+        linear-gradient(135deg, rgba(255,255,255,0.5), transparent 40%),
         linear-gradient(180deg, #FFF8F3, #F2E4D5);
-      box-shadow: 0 34px 65px rgba(95, 66, 52, 0.17), inset 0 0 0 1px rgba(160,120,95,0.18);
+      box-shadow: 0 34px 65px rgba(95, 66, 52, 0.14), inset 0 0 0 1px rgba(160,120,95,0.16);
       overflow: hidden;
     }
 
@@ -223,7 +323,7 @@
     .envelope::after {
       clip-path: polygon(0 100%, 50% 42%, 100% 100%);
       background: linear-gradient(180deg, #FFF8F3, #EEDFD1);
-      box-shadow: inset 0 1px 0 rgba(130,90,70,0.14);
+      box-shadow: inset 0 1px 0 rgba(130,90,70,0.13);
     }
 
     .flap {
@@ -236,12 +336,17 @@
       clip-path: polygon(0 0, 50% 100%, 100% 0);
       transform-origin: top;
       z-index: 3;
-      box-shadow: inset 0 -1px 0 rgba(130,90,70,0.12);
-      transition: transform 1500ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+      transition: transform 1500ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 900ms ease;
+      box-shadow: inset 0 -2px 6px rgba(0,0,0,0.04);
+      will-change: transform;
     }
 
     body.seal-clicked .flap {
-      transform: rotateX(178deg) translateY(-6px);
+      transform: rotateX(178deg) translateY(-8px);
+      transition-delay: 120ms;
+      box-shadow: 0 18px 30px rgba(95,66,52,0.08);
     }
 
     .inner-letter {
@@ -254,16 +359,32 @@
       background:
         repeating-linear-gradient(0deg, rgba(130,90,70,0.035) 0 1px, transparent 1px 28px),
         linear-gradient(145deg, #FFFDF8, #F4E6D6);
-      box-shadow: 0 16px 38px rgba(95,66,52,0.14);
+      box-shadow: 0 18px 42px rgba(95,66,52,0.16);
       z-index: 2;
-      transform: translateY(86px);
-      transition: transform 1550ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
+      opacity: 0;
+      transform: translate3d(0, 112px, 0) scale(0.94);
+      pointer-events: none;
+      transition:
+        transform 1750ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 900ms ease;
+      will-change: transform, opacity;
     }
 
     body.seal-clicked .inner-letter {
-      transform: translateY(-130px) scale(1.012);
+      opacity: 1;
+      transform: translate3d(0, -154px, 0) scale(1);
+      transition-delay: 420ms;
     }
 
+    body.letter-opening .inner-letter {
+      opacity: 0;
+      transform: translate3d(0, -205px, 0) scale(1.12) rotateX(3deg);
+      transition:
+        transform 1050ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 650ms ease 220ms;
+    }
+
+    /* ================= REAL SEAL IMAGE ================= */
     .wax-seal {
       position: absolute;
       left: 50%;
@@ -320,17 +441,8 @@
       filter: drop-shadow(0 28px 42px rgba(80, 38, 38, 0.44));
     }
 
-    .wax-seal:hover .seal-shine {
-      opacity: 1;
-    }
-
-    .wax-seal:hover .seal-shine::before {
-      animation: cinematicShine 1350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
-    .wax-seal:active {
-      transform: translateX(-50%) translateY(0) scale(0.985);
-    }
+    .wax-seal:hover .seal-shine { opacity: 1; }
+    .wax-seal:hover .seal-shine::before { animation: cinematicShine 1350ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
     @keyframes cinematicShine {
       0% { left: -90%; opacity: 0; }
@@ -348,14 +460,6 @@
       transform-origin: 50% 50%;
     }
 
-    body.seal-clicked .seal-shine {
-      opacity: 1;
-    }
-
-    body.seal-clicked .seal-shine::before {
-      animation: cinematicShine 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    }
-
     @keyframes sealMicroCrack {
       0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
       18% { transform: scale(1.035) rotate(-1.5deg); filter: brightness(1.08); }
@@ -371,52 +475,55 @@
       100% { filter: drop-shadow(0 8px 14px rgba(80, 38, 38, 0)); }
     }
 
-    .instruction { display:none; }
+    /* ================= INSTRUCTION ================= */
+ .instruction {
+  position: absolute;
+  top: calc(100% + 8px); /* tighter spacing */
+  left: 50%;
+  transform: translateX(-50%);
 
+  font-size: 14px;
+  color: #5B3D3E;
+
+  font-style: italic;
+  letter-spacing: 0.05em;
+
+  
+
+  /* 👇 FIXED PADDING */
+  padding: 6px 14px; /* was too big before */
+
+  border-radius: 999px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+
+  z-index: 10;
+}
+    /* ================= LETTER SCREEN ================= */
     .letter-paper {
       position: relative;
-      width: min(82vw, 620px);
-      min-height: min(78vh, 730px);
-      padding: clamp(44px, 7vw, 78px);
+      width: min(90vw, 760px);
+      max-height: 86vh;
+      overflow-y: auto;
+      padding: clamp(34px, 5vw, 64px);
       border-radius: 18px 24px 18px 28px;
       background:
         radial-gradient(circle at 18% 20%, rgba(255,255,255,0.85), transparent 28%),
-        repeating-linear-gradient(0deg, rgba(139,99,82,0.04) 0 1px, transparent 1px 34px),
+        repeating-linear-gradient(0deg, rgba(139,99,82,0.04) 0 1px, transparent 1px 30px),
         linear-gradient(145deg, #FFFDF8, #F4E6D7);
       box-shadow:
         0 36px 85px rgba(95, 66, 52, 0.19),
         inset 0 0 0 1px rgba(135, 95, 77, 0.11);
       transform: rotate(-0.4deg);
-    }
-
-    .letter-paper::before,
-    .letter-paper::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-      border-radius: inherit;
+      scrollbar-width: thin;
     }
 
     .letter-paper::before {
+      content: "";
+      position: absolute;
       inset: 12px;
       border: 1px solid rgba(183,119,130,0.18);
-    }
-
-    .letter-paper::after {
-      inset: 0;
-      background: linear-gradient(90deg, rgba(122,80,62,0.08), transparent 13%, transparent 88%, rgba(122,80,62,0.06));
-      mix-blend-mode: multiply;
-    }
-
-    .letter-title {
-      font-family: "Playfair Display", serif;
-      text-align: center;
-      font-size: clamp(20px, 3vw, 31px);
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(91,61,62,0.62);
-      margin-bottom: 42px;
+      border-radius: inherit;
+      pointer-events: none;
     }
 
     .letter-text {
@@ -424,13 +531,10 @@
       z-index: 2;
       white-space: pre-line;
       font-family: "Parisienne", cursive;
-      font-size: clamp(34px, 5.4vw, 54px);
-      line-height: 1.28;
+      font-size: clamp(22px, 3.1vw, 34px);
+      line-height: 1.38;
       color: rgba(91,61,62,0.9);
       text-shadow: 0.25px 0.25px 0 rgba(91,61,62,0.18);
-    }
-
-    .letter-text {
       opacity: 0;
       transform: translateY(10px);
     }
@@ -448,7 +552,7 @@
       position: absolute;
       width: clamp(130px, 19vw, 250px);
       pointer-events: none;
-      opacity: 0.78;
+      opacity: 0.64;
       filter: drop-shadow(0 14px 18px rgba(95,66,52,0.12));
     }
 
@@ -468,27 +572,37 @@
       box-shadow: 0 7px 14px rgba(95,66,52,0.1);
     }
 
-    .lily-svg .stem { stroke: #9BA979; stroke-width: 2.2; fill: none; opacity: 0.65; }
-    .lily-svg .leaf { fill: #B9B987; opacity: 0.58; }
-    .lily-svg .petal-main { fill: #FFF8F3; stroke: rgba(183,119,130,0.25); stroke-width: 1; }
-    .lily-svg .petal-blush { fill: #FADADD; opacity: 0.74; }
-    .lily-svg .stamen { stroke: #D8A65F; stroke-width: 1.4; stroke-linecap: round; }
-
     @media (max-width: 680px) {
-      .pigeon { left: 4%; top: 18%; width: 104px; }
-      .caption { top: 7%; font-size: 11px; }
+      .line-cigarette-loader { width: 230px; }
       .envelope-wrap { width: 88vw; height: 280px; }
-      .wax-seal { top: 150px; width: 84px; height: 84px; font-size: 39px; }
-      .instruction { font-size: 16px; bottom: 7%; }
-      .letter-paper { width: 88vw; min-height: 68vh; padding: 44px 32px; }
-      .corner-lilies { opacity: 0.55; }
+      .wax-seal { top: 150px; width: 86px; height: 86px; }
+      .instruction { font-size: 15px; bottom: 8%; }
+      .letter-paper { width: 92vw; max-height: 84vh; padding: 34px 26px; }
+      .letter-text { font-size: clamp(21px, 7vw, 30px); line-height: 1.34; }
+      .corner-lilies { opacity: 0.48; }
     }
   </style>
 </head>
 
 <body>
+  <!-- 2 SECOND LOADER -->
+  <div class="loader" id="loader">
+    <div class="cigarette-loader" aria-label="Loading">
+      <div class="cigarette">
+        <div class="paper"></div>
+        <div class="filter"></div>
+        <div class="ash"></div>
+        <div class="ember"></div>
+        <span class="smoke smoke-1"></span>
+        <span class="smoke smoke-2"></span>
+        <span class="smoke smoke-3"></span>
+      </div>
+    </div>
+  </div>
+
   <div class="grain"></div>
 
+  <!-- LANDING SCREEN -->
   <section class="screen landing">
     <div class="ambient" aria-hidden="true">
       <span class="heart" style="left:8%; top:28%; --speed:7s;">♡</span>
@@ -497,10 +611,6 @@
       <span class="heart" style="left:84%; top:64%; --speed:9s;">♡</span>
       <span class="heart" style="left:51%; top:12%; --speed:8s;">♡</span>
       <span class="heart" style="left:35%; top:84%; --speed:7.4s;">♡</span>
-
-      <span class="petal" style="left:12%; --fall:18s; animation-delay:-5s;"></span>
-      <span class="petal" style="left:61%; --fall:22s; animation-delay:-12s;"></span>
-      <span class="petal" style="left:88%; --fall:20s; animation-delay:-8s;"></span>
     </div>
 
     <div class="lily-cluster left-top">{{LILY}}</div>
@@ -509,22 +619,6 @@
     <div class="lily-cluster right-top">{{LILY}}</div>
 
     <div class="centerpiece">
-      
-
-      <div class="pigeon" aria-hidden="true">
-        <svg viewBox="0 0 180 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M58 58C70 32 101 26 126 42C106 45 91 55 80 73C71 71 63 67 58 58Z" fill="#EDE4DC" stroke="#B99B8A" stroke-width="2"/>
-          <path d="M87 45C60 16 31 16 11 31C38 31 56 47 70 70" fill="#F8F1EA" stroke="#B99B8A" stroke-width="2"/>
-          <path d="M76 69C45 72 26 88 18 101C44 94 70 92 94 78" fill="#F8F1EA" stroke="#B99B8A" stroke-width="2"/>
-          <circle cx="121" cy="39" r="17" fill="#EFE6DE" stroke="#B99B8A" stroke-width="2"/>
-          <circle cx="126" cy="35" r="2.2" fill="#5B3D3E"/>
-          <path d="M137 39L158 34L140 49Z" fill="#D9A56B" stroke="#B78352" stroke-width="1.5"/>
-          <path d="M119 58L131 82M109 58L113 82" stroke="#B99B8A" stroke-width="2" stroke-linecap="round"/>
-          <rect x="130" y="72" width="34" height="22" rx="2" fill="#FFF8F3" stroke="#C7A996"/>
-          <path d="M130 72L147 85L164 72" stroke="#C7A996"/>
-        </svg>
-      </div>
-
       <div class="envelope-wrap" id="envelopeWrap" aria-label="Open love letter">
         <div class="inner-letter"></div>
         <div class="flap"></div>
@@ -535,10 +629,11 @@
         </button>
       </div>
 
-      
+      <p class="instruction">tap on the seal</p>
     </div>
   </section>
 
+  <!-- LETTER SCREEN -->
   <section class="screen letter-screen">
     <div class="ambient" aria-hidden="true">
       <span class="heart" style="left:10%; top:24%; --speed:8s;">♡</span>
@@ -555,11 +650,11 @@
       <span class="paper-petal" style="--x:17%; --y:72%; --r:-24deg;"></span>
       <span class="paper-petal" style="--x:81%; --y:68%; --r:54deg;"></span>
 
-      
       <p class="letter-text" id="letterText"></p>
     </article>
   </section>
 
+  <!-- LILY SVG TEMPLATE -->
   <template id="lilyTemplate">
     <svg class="lily-svg" viewBox="0 0 240 210" xmlns="http://www.w3.org/2000/svg">
       <path class="stem" d="M67 192C91 129 105 89 130 44"/>
@@ -585,14 +680,28 @@
   </template>
 
   <script>
+    // Insert lily SVGs wherever {{LILY}} is used
     const lilyMarkup = document.getElementById("lilyTemplate").innerHTML;
     document.body.innerHTML = document.body.innerHTML.replaceAll("{{LILY}}", lilyMarkup);
+
+    // Loader duration: 2 seconds
+    const loader = document.getElementById("loader");
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        loader.classList.add("hide");
+      }, 2000);
+    });
 
     const seal = document.getElementById("seal");
     const envelopeWrap = document.getElementById("envelopeWrap");
     const letterText = document.getElementById("letterText");
 
-    const letter = `Dear Jazz,\n\nI just wanted to tell you in the corniest way ever that I love you. ahahahaha.\n\nxoxo,\nGauri`;
+    const letter = `Dear Jazz, 
+    I just wanted to tell you that you’re adorable and the sweetest. Thank you for always putting in so much effort just to talk to me or spend time with me. I genuinely appreciate everything you do. I’m grateful for you everyday. 
+    And this is the corniest way to say it (HAHA), but I LOVE YOU <333 
+    
+    Love and kisses,
+    Gauri`;
 
     function renderLetter() {
       letterText.textContent = letter;
@@ -600,13 +709,18 @@
 
     function openLetter(event) {
       event.stopPropagation();
-      if (document.body.classList.contains("open")) return;
+      if (document.body.classList.contains("open") || document.body.classList.contains("seal-clicked")) return;
 
       document.body.classList.add("seal-clicked");
+
+      setTimeout(() => {
+        document.body.classList.add("letter-opening");
+      }, 1650);
+
       setTimeout(() => {
         renderLetter();
         document.body.classList.add("open");
-      }, 1450);
+      }, 2650);
     }
 
     seal.addEventListener("click", openLetter);
