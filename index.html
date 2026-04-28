@@ -64,7 +64,7 @@
       inset: 0;
       display: grid;
       place-items: center;
-      transition: opacity 1000ms ease-in-out, transform 1000ms ease-in-out;
+      transition: opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1), transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .landing {
@@ -108,14 +108,15 @@
       position: absolute;
       color: rgba(232, 180, 184, 0.58);
       font-size: clamp(14px, 1.8vw, 24px);
-      animation: floatHeart var(--speed) ease-in-out infinite;
+      animation: floatHeart var(--speed) cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform, opacity;
       opacity: 0.65;
       filter: blur(0.1px);
     }
 
     @keyframes floatHeart {
-      0%, 100% { transform: translateY(0) rotate(-8deg) scale(1); }
-      50% { transform: translateY(-32px) rotate(8deg) scale(1.08); }
+      0% { transform: translate3d(0, 0, 0) rotate(-6deg) scale(1); }
+      50% { transform: translate3d(8px, -26px, 0) rotate(6deg) scale(1.04); }
+      100% { transform: translate3d(0, 0, 0) rotate(-6deg) scale(1); }
     }
 
     .petal {
@@ -125,13 +126,14 @@
       border-radius: 80% 0 80% 0;
       background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(250,218,221,0.8));
       opacity: 0.55;
-      animation: fallPetal var(--fall) linear infinite;
+      animation: fallPetal var(--fall) cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform, opacity;
     }
 
     @keyframes fallPetal {
-      0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
-      15% { opacity: 0.55; }
-      100% { transform: translateY(110vh) translateX(60px) rotate(260deg); opacity: 0; }
+      0% { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+      15% { opacity: 0.45; }
+      50% { transform: translate3d(28px, 48vh, 0) rotate(130deg); opacity: 0.5; }
+      100% { transform: translate3d(54px, 110vh, 0) rotate(260deg); opacity: 0; }
     }
 
     .lily-cluster {
@@ -139,7 +141,7 @@
       width: clamp(170px, 22vw, 330px);
       opacity: 0.92;
       filter: drop-shadow(0 18px 24px rgba(95, 65, 55, 0.13));
-      animation: breathe 7s ease-in-out infinite;
+      animation: breathe 8.5s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform;
     }
 
     .lily-cluster.left-top { left: -22px; top: -18px; transform: rotate(-15deg); }
@@ -148,8 +150,8 @@
     .lily-cluster.right-top { right: 5vw; top: 8vh; transform: rotate(145deg) scale(0.64); opacity: 0.36; }
 
     @keyframes breathe {
-      0%, 100% { translate: 0 0; scale: 1; }
-      50% { translate: 0 -9px; scale: 1.025; }
+      0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+      50% { transform: translate3d(0, -7px, 0) scale(1.018); }
     }
 
     .centerpiece {
@@ -168,14 +170,14 @@
       left: 16%;
       width: 138px;
       height: 86px;
-      animation: pigeonFloat 5.8s ease-in-out infinite;
+      animation: pigeonFloat 7.2s cubic-bezier(0.45, 0, 0.55, 1) infinite; will-change: transform;
       filter: drop-shadow(0 14px 20px rgba(90,60,50,0.12));
       z-index: 3;
     }
 
     @keyframes pigeonFloat {
-      0%, 100% { transform: translateY(0) rotate(-4deg); }
-      50% { transform: translateY(-18px) rotate(3deg); }
+      0%, 100% { transform: translate3d(0, 0, 0) rotate(-3deg); }
+      50% { transform: translate3d(8px, -14px, 0) rotate(2deg); }
     }
 
     .pigeon svg { width: 100%; height: 100%; }
@@ -186,7 +188,7 @@
       height: 310px;
       cursor: pointer;
       perspective: 1100px;
-      transition: transform 420ms ease, filter 420ms ease;
+      transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 700ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
       z-index: 5;
     }
 
@@ -235,11 +237,11 @@
       transform-origin: top;
       z-index: 3;
       box-shadow: inset 0 -1px 0 rgba(130,90,70,0.12);
-      transition: transform 1000ms ease-in-out;
+      transition: transform 1500ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
     }
 
     body.seal-clicked .flap {
-      transform: rotateX(178deg);
+      transform: rotateX(178deg) translateY(-6px);
     }
 
     .inner-letter {
@@ -255,85 +257,118 @@
       box-shadow: 0 16px 38px rgba(95,66,52,0.14);
       z-index: 2;
       transform: translateY(86px);
-      transition: transform 1100ms ease-in-out;
+      transition: transform 1550ms cubic-bezier(0.22, 1, 0.36, 1); will-change: transform;
     }
 
     body.seal-clicked .inner-letter {
-      transform: translateY(-116px);
+      transform: translateY(-130px) scale(1.012);
     }
 
     .wax-seal {
       position: absolute;
       left: 50%;
-      top: 162px;
-      width: 96px;
-      height: 96px;
+      top: 158px;
+      width: 112px;
+      height: 112px;
       transform: translateX(-50%);
       border: 0;
-      border-radius: 50%;
+      background: transparent;
       cursor: pointer;
-      z-index: 8;
-      color: #FFF8F3;
-      font-family: "Playfair Display", serif;
-      font-size: 46px;
-      font-weight: 700;
-      background:
-        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.5), transparent 18%),
-        radial-gradient(circle at 68% 70%, rgba(120,48,64,0.42), transparent 35%),
-        linear-gradient(145deg, #F1A8B3, #D98191 48%, #B85F72);
-      box-shadow:
-        inset 0 3px 8px rgba(255,255,255,0.32),
-        inset 0 -8px 18px rgba(104,49,57,0.28),
-        0 14px 30px rgba(122,70,80,0.32);
-      transition: transform 350ms ease, box-shadow 350ms ease, opacity 500ms ease;
+      z-index: 10;
+      padding: 0;
+      border-radius: 50%;
+      overflow: visible;
+      transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity, filter;
+      filter: drop-shadow(0 18px 28px rgba(80, 38, 38, 0.34));
     }
 
-    .wax-seal::before {
-      content: "";
-      position: absolute;
-      inset: 9px;
-      border: 1px solid rgba(255,248,243,0.55);
+    .wax-seal img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 50%;
-      box-shadow: inset 0 0 16px rgba(255,255,255,0.24);
+      display: block;
+      transform: translateZ(0) scale(1);
+      transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1), filter 900ms ease;
+      will-change: transform, opacity;
     }
 
-    .wax-seal::after {
-      content: "";
+    .seal-shine {
       position: absolute;
-      inset: -10px;
+      inset: 6px;
+      z-index: 2;
       border-radius: 50%;
-      background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.38) 44%, transparent 62%);
-      transform: translateX(-72px) rotate(18deg);
+      pointer-events: none;
+      overflow: hidden;
       opacity: 0;
     }
 
+    .seal-shine::before {
+      content: "";
+      position: absolute;
+      top: -25%;
+      left: -90%;
+      width: 54%;
+      height: 150%;
+      background: linear-gradient(110deg, transparent, rgba(255, 238, 218, 0.38), transparent);
+      transform: rotate(18deg);
+    }
+
     .wax-seal:hover {
-      transform: translateX(-50%) scale(1.06);
-      box-shadow:
-        inset 0 3px 8px rgba(255,255,255,0.35),
-        inset 0 -8px 18px rgba(104,49,57,0.3),
-        0 20px 40px rgba(122,70,80,0.4);
+      transform: translateX(-50%) translateY(-4px) scale(1.045);
+      filter: drop-shadow(0 28px 42px rgba(80, 38, 38, 0.44));
     }
 
-    .wax-seal:hover::after {
-      animation: shine 900ms ease;
+    .wax-seal:hover .seal-shine {
+      opacity: 1;
     }
 
-    @keyframes shine {
-      0% { opacity: 0; transform: translateX(-76px) rotate(18deg); }
-      35% { opacity: 1; }
-      100% { opacity: 0; transform: translateX(76px) rotate(18deg); }
+    .wax-seal:hover .seal-shine::before {
+      animation: cinematicShine 1350ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .wax-seal:active {
+      transform: translateX(-50%) translateY(0) scale(0.985);
+    }
+
+    @keyframes cinematicShine {
+      0% { left: -90%; opacity: 0; }
+      20% { opacity: 1; }
+      100% { left: 140%; opacity: 0; }
     }
 
     body.seal-clicked .wax-seal {
-      animation: crackSeal 900ms ease-in-out forwards;
+      pointer-events: none;
+      animation: sealDriftAway 1450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    @keyframes crackSeal {
-      0% { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
-      35% { transform: translateX(-50%) scale(1.09) rotate(-2deg); }
-      65% { clip-path: polygon(0 0,48% 0,44% 38%,50% 53%,42% 100%,0 100%,0 0,52% 0,100% 0,100% 100%,48% 100%,56% 52%,50% 38%); }
-      100% { opacity: 0; transform: translateX(-50%) scale(0.92) rotate(7deg); }
+    body.seal-clicked .wax-seal img {
+      animation: sealMicroCrack 1450ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transform-origin: 50% 50%;
+    }
+
+    body.seal-clicked .seal-shine {
+      opacity: 1;
+    }
+
+    body.seal-clicked .seal-shine::before {
+      animation: cinematicShine 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes sealMicroCrack {
+      0% { transform: scale(1) rotate(0deg); filter: brightness(1); }
+      18% { transform: scale(1.035) rotate(-1.5deg); filter: brightness(1.08); }
+      34% { transform: scale(1.065) rotate(1.2deg); filter: brightness(1.03); }
+      52% { transform: scale(1.02) rotate(-0.8deg); }
+      72% { transform: scale(0.92) rotate(5deg); opacity: 0.92; }
+      100% { transform: scale(0.62) rotate(14deg) translate3d(18px, 28px, 0); opacity: 0; filter: blur(1px); }
+    }
+
+    @keyframes sealDriftAway {
+      0% { filter: drop-shadow(0 18px 28px rgba(80, 38, 38, 0.34)); }
+      65% { filter: drop-shadow(0 32px 44px rgba(80, 38, 38, 0.42)); }
+      100% { filter: drop-shadow(0 8px 14px rgba(80, 38, 38, 0)); }
     }
 
     .instruction { display:none; }
@@ -395,15 +430,18 @@
       text-shadow: 0.25px 0.25px 0 rgba(91,61,62,0.18);
     }
 
-    .letter-text span {
+    .letter-text {
       opacity: 0;
-      animation: inkAppear 1500ms ease forwards;
-      animation-delay: var(--delay);
+      transform: translateY(10px);
     }
 
-    @keyframes inkAppear {
-      from { opacity: 0; filter: blur(2px); }
-      to { opacity: 1; filter: blur(0); }
+    body.open .letter-text {
+      animation: softInkReveal 1800ms cubic-bezier(0.22, 1, 0.36, 1) 450ms forwards;
+    }
+
+    @keyframes softInkReveal {
+      from { opacity: 0; transform: translateY(10px); filter: blur(2px); }
+      to { opacity: 1; transform: translateY(0); filter: blur(0); }
     }
 
     .corner-lilies {
@@ -491,7 +529,10 @@
         <div class="inner-letter"></div>
         <div class="flap"></div>
         <div class="envelope"></div>
-        <button class="wax-seal" id="seal" aria-label="Click wax seal to open letter">J</button>
+        <button class="wax-seal" id="seal" aria-label="Tap wax seal to open letter">
+          <span class="seal-shine"></span>
+          <img src="seal.png" alt="wax seal with J" />
+        </button>
       </div>
 
       
@@ -554,13 +595,7 @@
     const letter = `Dear Jazz,\n\nI just wanted to tell you in the corniest way ever that I love you. ahahahaha.\n\nxoxo,\nGauri`;
 
     function renderLetter() {
-      letterText.innerHTML = "";
-      [...letter].forEach((char, index) => {
-        const span = document.createElement("span");
-        span.textContent = char;
-        span.style.setProperty("--delay", `${index * 20}ms`);
-        letterText.appendChild(span);
-      });
+      letterText.textContent = letter;
     }
 
     function openLetter(event) {
@@ -571,7 +606,7 @@
       setTimeout(() => {
         renderLetter();
         document.body.classList.add("open");
-      }, 1150);
+      }, 1450);
     }
 
     seal.addEventListener("click", openLetter);
