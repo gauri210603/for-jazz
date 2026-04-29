@@ -190,12 +190,12 @@
       transition: opacity 1400ms cubic-bezier(0.22, 1, 0.36, 1), transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    .landing {
-      background:
-        radial-gradient(circle at 50% 46%, rgba(255,248,243,0.88), transparent 34%),
-        linear-gradient(135deg, #F5EFE6 0%, #FFF8F3 45%, #FADADD 140%);
-      z-index: 2;
-    }
+  .landing {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(255,248,243,0.12), transparent 34%),
+    linear-gradient(135deg, #7C2A2A 0%, #5A1F1F 50%, #2E0E0E 120%);
+  z-index: 2;
+}
 
     .letter-screen {
       opacity: 0;
@@ -296,17 +296,24 @@
       filter: drop-shadow(0 30px 42px rgba(95, 66, 52, 0.16));
     }
 
-    .envelope {
-      position: absolute;
-      inset: 32px 0 0;
-      z-index: 1;
-      border-radius: 8px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.5), transparent 40%),
-        linear-gradient(180deg, #FFF8F3, #F2E4D5);
-      box-shadow: 0 34px 65px rgba(95, 66, 52, 0.14), inset 0 0 0 1px rgba(160,120,95,0.16);
-      overflow: hidden;
-    }
+   .envelope {
+  position: absolute;
+  inset: 32px 0 0;
+  z-index: 1;
+  border-radius: 8px;
+
+  /* 👇 DARKER BEIGE (WARM, PREMIUM) */
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.25), transparent 40%),
+    linear-gradient(180deg, #E8D8C8 0%, #D8C2AE 100%);
+
+  box-shadow:
+    0 34px 65px rgba(70, 45, 30, 0.18),
+    inset 0 1px 0 rgba(255,255,255,0.45),
+    inset 0 -6px 14px rgba(90, 60, 40, 0.12);
+
+  overflow: hidden;
+}
 
     .envelope::before,
     .envelope::after {
@@ -314,25 +321,22 @@
       position: absolute;
       inset: 0;
     }
-
-    .envelope::before {
-      clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
-      background: linear-gradient(135deg, #F4E6D8, #FFF8F3 50%, #EEDCCD);
-    }
-
-    .envelope::after {
-      clip-path: polygon(0 100%, 50% 42%, 100% 100%);
-      background: linear-gradient(180deg, #FFF8F3, #EEDFD1);
-      box-shadow: inset 0 1px 0 rgba(130,90,70,0.13);
-    }
-
+.envelope::before {
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, #D8C2AE, #E8D8C8 50%, #CFB6A1);
+}
+  .envelope::after {
+  clip-path: polygon(0 100%, 50% 42%, 100% 100%);
+  background: linear-gradient(180deg, #E8D8C8, #CFB6A1);
+  box-shadow: inset 0 1px 0 rgba(100, 70, 50, 0.18);
+}
     .flap {
       position: absolute;
       left: 0;
       right: 0;
       top: 32px;
       height: 180px;
-      background: linear-gradient(180deg, #FFF8F3, #EEDCCD);
+       background: linear-gradient(180deg, #E8D8C8, #CFB6A1);
       clip-path: polygon(0 0, 50% 100%, 100% 0);
       transform-origin: top;
       z-index: 3;
@@ -476,21 +480,19 @@
     }
 
     /* ================= INSTRUCTION ================= */
- .instruction {
+.instruction {
   position: absolute;
-  top: calc(100% + 8px); /* tighter spacing */
+  top: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
 
   font-size: 14px;
-  color: #5B3D3E;
+
+  /* 👇 PINK TEXT */
+  color: #E8B4B8;
 
   font-style: italic;
   letter-spacing: 0.05em;
-
-  
-
- 
 }
     /* ================= LETTER SCREEN ================= */
     .letter-paper {
